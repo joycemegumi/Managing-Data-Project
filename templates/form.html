@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>NYPD Crime Data by Precints & Crime Category (Period: {{mindate}} - {{maxdate}})</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="container mx-auto">
+        <img src="https://www.nyc.gov/assets/nypd/images/content/header/logo.png" alt="nypd-logo">
+        <h1 class="text-3xl my-4">Enter Precinct ID to View Crime Category Breakdown</h1>
+        <form method="POST" action="/">
+            <div class="mb-6">
+                <label for="precinct_id" class="block mb-2 text-sm font-medium text-gray-900">Precinct</label>
+                <select id="precinct_id" name="precinct_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+                    {% for precinct in precincts %}
+                    <option value="{{ precinct.precinct_id }}">{{ precinct["precinct_id"] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" value="Submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+        </form>
+        <h2 class="mt-16 text-3xl">Top 5 Precincts with the Highest Total Arrests (Period: {{mindate}} - {{maxdate}})</h2>
+        <div class="mt-4 relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" class="px-6 py-3">
+                    Precinct
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Total Arrests
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for precinct_id, count in top5precincts %}
+                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <td class="px-6 py-4">
+                      {{ precinct_id }}
+                    </td>
+                    <td class="px-6 py-4">
+                      {{ count }}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </div>
+</body>
+
+</html>

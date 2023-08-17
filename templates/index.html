@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Crime Data</title>
+  <style>
+    /* table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #003399;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    } */
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <div class="container mx-auto mb-8">
+    <img src="https://www.nyc.gov/assets/nypd/images/content/header/logo.png" alt="nypd-logo">
+    <h1 class="text-3xl my-4">Arrests by Crime Category in Precinct: {{ precinct_id }} (Period: {{mindate}} - {{maxdate}})</h1>
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Crime Category
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Total Arrests
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in crimes_grouped %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <td class="px-6 py-4">
+                {{ row['crime_category'] }}
+              </td>
+              <td class="px-6 py-4">
+                {{ row['count'] }}
+              </td>
+            </tr>
+          {% endfor %}
+          <tfoot>
+              <tr class="font-semibold text-gray-900 dark:text-white">
+                  <th scope="row" class="px-6 py-3 text-base">Total</th>
+                  <td class="px-6 py-3">{{ sum_crimes_grouped }}</td>
+              </tr>
+          </tfoot>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+
+</html>
